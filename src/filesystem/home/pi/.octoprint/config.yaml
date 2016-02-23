@@ -1,8 +1,54 @@
+accessControl:
+  enabled: false
+server:
+  firstRun: false
+api:
+  allowCrossOrigin: true
+appearance: {}
+feature:
+  sdsupport: false
+  waitForStartOnConnect: false
+gcodeViewer:
+  enabled: false
+serial:
+  port: /dev/ttyACM0
+  baudrate: 250000
+  autoconnect: true
+  timeout:
+    connection: 2
+appearance:
+  disabled:
+    settings:
+    - serial
+    - printerprofiles
+    - terminalfilters
+    - section_features
+    - features
+    - webcam
+    - api
+    - folders
+    - appearance
+temperature:
+  profiles:
+  - bed: '50'
+    extruder: '200'
+    name: PLA
+terminalFilters:
+- name: Suppress M105 requests/responses
+  regex: '(Send: M105)|(Recv: ok (B|T\d*):)'
+scripts:
+  gcode:
+    afterPrintCancelled: "M410\nG4 S2\nG91\nG1 Z10 F500\n\nM42 P2 S0\nM42 P75 S0\n\n; disable motors\nM84\n\n;disable all heaters\n{% snippet 'disable_hotends' %}\nM140 S0\n\n;disable fan\nM106 S0"
+  afterPrintDone: ";disable all heaters\n{% snippet 'disable_hotends' %}\n\nM140 S0\nM106 S0\nM42 P2 S0\nM42 P75 S0"
+  afterPrintPaused: "G91\nG1 Z10\nG90"
+  afterPrintResumed: "G91\nG1 Z-10\nG90"
 webcam:
   stream: /webcam/?action=stream
   snapshot: http://127.0.0.1:8080/?action=snapshot
   ffmpeg: /usr/bin/avconv
 plugins:
+  _disabled:
+  - cura
   cura:
     cura_engine: /usr/local/bin/cura_engine
   discovery:
@@ -27,9 +73,15 @@ system:
     confirm: You are about to reboot the system
     async: true
     ignore: true
-  - name: Restart OctoPrint
+  - name: Restart Control Interface
     command: sudo service octoprint restart
     action: restart
-    confirm: You are about to restart OctoPrint
+    confirm: You are about to restart the Control Interface
     async: true
     ignore: true
+  - action: update-automation-scripts
+    command: cd /home/pi/.mecodescripts && git fetch && git reset --hard origin/master
+    name: Update Automation Scripts
+  - action: update-printer-ui
+    command: cd /home/pi/printer_ui && git fetch && git reset --hard origin/master
+    name: Update Printer UI
