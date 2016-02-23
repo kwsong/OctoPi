@@ -1,0 +1,2 @@
+0a1
+> 1:2345:respawn:/bin/login -f pi tty1 </dev/tty1 >/dev/tty1 2>&1
