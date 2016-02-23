@@ -49,7 +49,7 @@ fi
 apt-get remove -y --purge scratch squeak-plugins-scratch squeak-vm wolfram-engine python-minecraftpi minecraft-pi sonic-pi oracle-java8-jdk bluej libreoffice-common libreoffice-core freepats $remove_extra
 apt-get autoremove -y
 
-apt-get -y --force-yes install python2.7 python-virtualenv python-dev git screen libts-bin subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev
+apt-get -y --force-yes install python2.7 python-virtualenv python-dev git screen libts-bin subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev fbi atop arduino unclutter matchbox x11-server-utils --fix-missing
 
 echo " - Reinstall iputils-ping"
 apt-get install --reinstall iputils-ping
