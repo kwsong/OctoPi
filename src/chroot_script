@@ -49,7 +49,7 @@ fi
 apt-get remove -y --purge scratch squeak-plugins-scratch squeak-vm wolfram-engine python-minecraftpi minecraft-pi sonic-pi oracle-java8-jdk bluej libreoffice-common libreoffice-core freepats $remove_extra
 apt-get autoremove -y
 
-apt-get -y --force-yes install python2.7 python-virtualenv python-dev git screen libts-bin subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev fbi atop arduino unclutter matchbox x11-server-utils --fix-missing
+apt-get -y --force-yes install python2.7 python-virtualenv python-dev git screen libts-bin subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev fbi atop unclutter matchbox python-numpy --fix-missing
 
 echo " - Reinstall iputils-ping"
 apt-get install --reinstall iputils-ping
@@ -72,7 +72,7 @@ pushd /home/pi
     apt-get -y --force-yes install python-cryptography
     from=/usr/lib/python2.7/dist-packages
     to=/home/pi/oprint/lib/python2.7/site-packages
-    for pattern in "cffi*" "cryptography*" "OpenSSL*" "ply*" "pycparser*" "pyOpenSSL*" "six*"
+    for pattern in "cffi*" "cryptography*" "OpenSSL*" "ply*" "pycparser*" "pyOpenSSL*" "six*" "numpy*"
     do
       cp -v -r --preserve=mode,timestamps $from/$pattern $to/
     done
@@ -84,6 +84,21 @@ pushd /home/pi
   apt-get autoremove -y
   chown -R pi:pi /home/pi/oprint
   sudo -u pi /home/pi/oprint/bin/pip install ndg-httpsclient pyasn1
+
+  # OctoPrint & pyserial
+  if [ "$OCTOPI_INCLUDE_OCTOPRINT" == "yes" ]
+  then
+    echo "--- Installing OctoPrint"
+
+    #pybonjour (for mdns discovery)
+    sudo -u pi /home/pi/oprint/bin/pip install https://pybonjour.googlecode.com/files/pybonjour-1.1.1.tar.gz
+
+    #OctoPrint
+    chown -R pi:pi OctoPrint
+    pushd OctoPrint
+      PIP_DEFAULT_TIMEOUT=60 sudo -u pi /home/pi/oprint/bin/python setup.py install
+    popd
+  fi
 
   # install chromium
   dpkg -i chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
@@ -101,38 +116,23 @@ pushd /home/pi
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-V8theme/archive/master.zip
 
   # install printer_ui
-  sudo -u pi git clone git@github.com:Voxel8/printer-automation.git
-  pushd printer_ui
-    chmod +x install.sh
-    ./install.sh
-  popd
+  #sudo -u pi git clone git@github.com:Voxel8/printer-automation.git
+  #pushd printer_ui
+    #chmod +x install.sh
+    #./install.sh
+  #popd
 
   # install automation scripts
-  sudo -u pi git clone git@github.com:Voxel8/printer-automation.git
-  sudo -u pi ln -s printer_automation .mecodescripts
+  #sudo -u pi git clone git@github.com:Voxel8/printer-automation.git
+  #sudo -u pi ln -s printer_automation .mecodescripts
 
   # grab firmware
-  sudo -u pi git clone git@github.com:Voxel8/Marlin.git
-  sudo -u pi pip install ino
+  sudo -u pi git clone https://github.com/Voxel8/Marlin.git
+  sudo pip install ino
 
   # install patches
-  sudo patch /etc/inittab < inittab.patch
-  sudo patch /etc/rc.local < $PATCHES/rc.local.patch
-
-  # OctoPrint & pyserial
-  if [ "$OCTOPI_INCLUDE_OCTOPRINT" == "yes" ]
-  then
-    echo "--- Installing OctoPrint"
-
-    #pybonjour (for mdns discovery)
-    sudo -u pi /home/pi/oprint/bin/pip install https://pybonjour.googlecode.com/files/pybonjour-1.1.1.tar.gz
-
-    #OctoPrint
-    chown -R pi:pi OctoPrint
-    pushd OctoPrint
-      PIP_DEFAULT_TIMEOUT=60 sudo -u pi /home/pi/oprint/bin/python setup.py install
-    popd
-  fi
+  sudo patch /etc/inittab < patches/inittab.patch
+  sudo patch /etc/rc.local < patches/rc.local.patch
 
   #OctoPiPanel
   if [ "$OCTOPI_INCLUDE_OCTOPIPANEL" == "yes" ]
