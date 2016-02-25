@@ -47,7 +47,7 @@ pushd /home/pi
   sudo install -Dm755 startup/directly_to_browser.sh /etc/directly_to_browser.sh
 
   #stop directly booting to default Desktop
-  systemctlif_exists set-default multi-user.target
+  systemctl_if_exists set-default multi-user.target
 
 popd
 
