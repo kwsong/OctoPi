@@ -8,7 +8,7 @@ unpack /filesystem/home/pi /home/pi pi
 unpack /filesystem/root /
 unpack /filesystem/boot /boot
 
-apt-get -y --force-yes install atop unclutter matchbox --fix-missing
+apt-get -y --force-yes install fbi atop unclutter matchbox --fix-missing
 sudo pip install ino
 
 
