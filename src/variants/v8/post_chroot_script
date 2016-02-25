@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -x
+
+source /common.sh
+install_chroot_fail_on_error_trap
+
+unpack /filesystem/root / root
+unpack /filesystem/home/pi /home/pi pi
+unpack /filesystem/boot /boot
+
+apt-get -y --force-yes install atop unclutter matchbox --fix-missing
+sudo pip install ino
+
+
+pushd /home/pi
+
+  # install systemwide numpy and copy to venv to save time
+  apt-get -y --force-yes install python-numpy --fix-missing
+  cp -v -r --preserve=mode,timestamps /usr/lib/python2.7/dist-packages/numpy* /home/pi/oprint/lib/python2.7/site-packages
+  apt-get remove python-numpy
+
+  # install chromium
+  wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+  wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb
+  wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+  dpkg -i chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+  dpkg -i chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+  rm chromium-*
+
+  # install plugins
+  #sudo -u pi /home/pi/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-Netconnectd/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-RequestSpinner/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-Yamlpatcher/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Salandora/octoprint-customControl/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Salandora/OctoPrint-SystemCommandEditor/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/markwal/OctoPrint-ScreenSquish/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-Automation-Scripts/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-FirmwareUpdate/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-V8theme/archive/master.zip
+
+  sudo insserv /etc/init.d/asplashscreen
+
+popd
+
+#cleanup
+apt-get clean
+apt-get autoremove -y

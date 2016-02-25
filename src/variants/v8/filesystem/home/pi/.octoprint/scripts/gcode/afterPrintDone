@@ -1,0 +1,5 @@
+{% snippet 'disable_hotends' %}
+M140 S0
+M106 S0
+M42 P2 S0
+M42 P75 S0

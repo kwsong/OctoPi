@@ -1,0 +1,2 @@
+xinit ./etc/directly_to_browser.sh
+exit 0
