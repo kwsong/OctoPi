@@ -14,7 +14,7 @@ ssh-add $HOME/.ssh/id_rsa
 
 # Push ssh key to github
 KEY=`cat $HOME/.ssh/id_rsa.pub`
-curl -u Voxel8RaspiBot:voxel8isgr8m8 --data "{\"title\": \"frompi\", \"key\": \"$KEY\"}" https://api.github.com/user/keys
+curl -u Voxel8RaspiBot --data "{\"title\": \"frompi\", \"key\": \"$KEY\"}" https://api.github.com/user/keys
 
 # add Github to known_hosts
 ssh-keyscan -H github.com >> /home/pi/.ssh/known_hosts
