@@ -6,8 +6,8 @@ api:
   allowCrossOrigin: true
 appearance: {}
 feature:
-  sdsupport: false
-  waitForStartOnConnect: false
+  sdSupport: false
+  waitForStartOnConnect: true
 gcodeViewer:
   enabled: false
 serial:
@@ -17,17 +17,27 @@ serial:
   timeout:
     connection: 2
 appearance:
-  disabled:
-    settings:
-    - serial
-    - printerprofiles
-    - terminalfilters
-    - section_features
-    - features
-    - webcam
-    - api
-    - folders
-    - appearance
+  components:
+    disabled:
+      settings:
+      - serial
+      - printerprofiles
+      - terminalfilters
+      - server
+      - section_features
+      - features
+      - webcam
+      - api
+      - folders
+      - appearance
+      - section_octoprint
+      - plugin_ScreenSquish
+      tab:
+      - timelapse
+    order:
+      settings:
+      - section_printer
+      - plugin_automation_scripts
 temperature:
   profiles:
   - bed: '50'
