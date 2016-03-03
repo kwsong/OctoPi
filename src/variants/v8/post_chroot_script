@@ -14,7 +14,7 @@ sudo pip install ino
 
 pushd /home/pi
 
-  # install systemwide numpy and copy to venv to save time
+  # install system wide numpy and copy to venv to save time
   apt-get -y --force-yes install python-numpy --fix-missing
   cp -v -r --preserve=mode,timestamps /usr/lib/python2.7/dist-packages/numpy* /home/pi/oprint/lib/python2.7/site-packages
   apt-get -y remove python-numpy

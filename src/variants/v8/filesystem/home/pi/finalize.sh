@@ -35,3 +35,4 @@ ln -s $HOME/printer-automation $HOME/.mecodescripts
 cd $HOME
 git clone $FIRMWARE_URL
 
+sudo chmod +x /etc/rc.local
