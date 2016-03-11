@@ -1,0 +1,3 @@
+#!/bin/sh
+PASS=`cat /home/pi/.pass`
+echo "{\"pass\":\"$PASS\"}"
