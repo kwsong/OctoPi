@@ -8,6 +8,7 @@ unpack /filesystem/home/pi /home/pi pi
 unpack /filesystem/root /
 unpack /filesystem/boot /boot
 
+apt-get update
 apt-get -y --force-yes install fbi atop unclutter matchbox --fix-missing
 sudo pip install ino
 
@@ -46,7 +47,6 @@ pushd /home/pi
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-FirmwareUpdate/archive/master.zip
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-V8theme/archive/master.zip
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-Schedule-Reboot/archive/master.zip
-  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-Gcodemonitor/archive/master.zip
 
   #Custom Splash screen setup
   sudo install -Dm755 startup/asplashscreen /etc/init.d/asplashscreen
