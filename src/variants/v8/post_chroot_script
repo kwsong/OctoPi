@@ -27,6 +27,13 @@ pushd /home/pi
   dpkg -i chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
   rm chromium-*
 
+  # install webmin
+  apt-get -y --force-yes install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python --fix-missing
+  wget http://prdownloads.sourceforge.net/webadmin/webmin_1.791_all.deb
+  dpkg --install webmin_1.791_all.deb
+  rm webmin_1.791_all.deb
+  update-rc.d -f webmin remove
+
   # install plugins
   #sudo -u pi /home/pi/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-Netconnectd/archive/master.zip
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-RequestSpinner/archive/master.zip
