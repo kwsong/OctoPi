@@ -1,5 +1,5 @@
 accessControl:
-  enabled: false
+  enabled: true
 server:
   firstRun: false
 api:
@@ -57,10 +57,10 @@ plugins:
     cura_engine: /usr/local/bin/cura_engine
   discovery:
     publicPort: 80
-  softwareupdate:
-    checks:
-      octoprint:
-        update_folder: /home/pi/OctoPrint
+  #softwareupdate:
+  #  checks:
+  #    octoprint:
+  #      update_folder: /home/pi/OctoPrint
     octoprint_restart_command: sudo service octoprint restart
     environment_restart_command: sudo shutdown -r now
 system:
