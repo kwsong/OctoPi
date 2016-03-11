@@ -8,7 +8,6 @@ unpack /filesystem/home/pi /home/pi pi
 unpack /filesystem/root /
 unpack /filesystem/boot /boot
 
-apt-get update
 apt-get -y --force-yes install fbi atop unclutter matchbox --fix-missing
 sudo pip install ino
 
@@ -29,11 +28,11 @@ pushd /home/pi
   rm chromium-*
 
   # install webmin
-  apt-get -y --force-yes install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python --fix-missing
-  wget http://prdownloads.sourceforge.net/webadmin/webmin_1.791_all.deb
-  dpkg --install webmin_1.791_all.deb
-  rm webmin_1.791_all.deb
-  update-rc.d -f webmin remove
+  #apt-get -y --force-yes install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python --fix-missing
+  #wget http://prdownloads.sourceforge.net/webadmin/webmin_1.791_all.deb
+  #dpkg --install webmin_1.791_all.deb
+  #rm webmin_1.791_all.deb
+  #update-rc.d -f webmin remove
 
   # install 3rd party octoprint plugins
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-RequestSpinner/archive/master.zip
