@@ -9,15 +9,16 @@ unpack /filesystem/root /
 unpack /filesystem/boot /boot
 
 apt-get -y --force-yes install fbi atop unclutter matchbox --fix-missing
-sudo pip install ino
+sudo pip install ino pyyaml
 
 
 pushd /home/pi
 
-  # install system wide numpy and copy to venv to save time
-  apt-get -y --force-yes install python-numpy --fix-missing
+  # install system wide numpy and scipy and copy to venv to save time
+  apt-get -y --force-yes install python-scipy python-numpy --fix-missing
+  cp -v -r --preserve=mode,timestamps /usr/lib/python2.7/dist-packages/scipy* /home/pi/oprint/lib/python2.7/site-packages
   cp -v -r --preserve=mode,timestamps /usr/lib/python2.7/dist-packages/numpy* /home/pi/oprint/lib/python2.7/site-packages
-  apt-get -y remove python-numpy
+  apt-get -y remove python-scipy python-numpy
 
   # install chromium
   wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
