@@ -8,7 +8,7 @@ unpack /filesystem/home/pi /home/pi pi
 unpack /filesystem/root /
 unpack /filesystem/boot /boot
 
-apt-get -y --force-yes install fbi atop unclutter matchbox --fix-missing
+apt-get -y --force-yes install fbi atop unclutter matchbox openvpn --fix-missing
 sudo pip install ino pyyaml
 
 
@@ -28,6 +28,11 @@ pushd /home/pi
   dpkg -i chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
   rm chromium-*
 
+  # install wifi drivers
+  wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/8812au-4.1.17-v7-834.tar.gz
+  tar xzf 8812au-4.1.17-v7-834.tar.gz
+  ./install.sh
+
   # install webmin
   #apt-get -y --force-yes install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python --fix-missing
   #wget http://prdownloads.sourceforge.net/webadmin/webmin_1.791_all.deb
@@ -41,6 +46,7 @@ pushd /home/pi
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/octoprint-customControl/archive/master.zip
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-SystemCommandEditor/archive/master.zip
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-ScreenSquish/archive/master.zip
+  sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-ActiveFilters/archive/master.zip
 
   # install custom octoprint plugins
   sudo -u pi /home/pi/oprint/bin/pip install https://github.com/Voxel8/OctoPrint-Automation-Scripts/archive/master.zip
