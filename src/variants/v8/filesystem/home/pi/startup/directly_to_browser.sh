@@ -22,8 +22,9 @@ sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium/De
     --noerrdialogs \
     --no-sandbox \
     --user-data-dir \
-    --incognito \
-    --kiosk $URL > /tmp/chro.log 2>/tmp/chro_err.log
+    --no-first-run \
+    --disable-session-crashed-bubble \
+    --kiosk $URL >> /var/log/chromium.log 2>&1
 else
    /usr/bin/midori -e Fullscreen -a $URL
 fi
