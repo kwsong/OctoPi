@@ -29,9 +29,9 @@ pushd /home/pi
   rm chromium-*
 
   # install wifi drivers
-  wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/8812au-4.1.17-v7-834.tar.gz
-  tar xzf 8812au-4.1.17-v7-834.tar.gz
-  ./install.sh
+  #wget https://s3-us-west-2.amazonaws.com/v8-file-transfer/8812au-4.1.17-v7-834.tar.gz
+  #tar xzf 8812au-4.1.17-v7-834.tar.gz
+  #./install.sh
 
   # install webmin
   #apt-get -y --force-yes install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python --fix-missing
